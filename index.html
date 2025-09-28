@@ -1,166 +1,244 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Monika — Kişiye Özel Hediyeler</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#fffafa;color:#111;}
-header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10;}
-.brand{display:flex;align-items:center;gap:12px;}
-.logo{width:44px;height:44px;border-radius:8px;background:#ff7aa2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
-.container{max-width:1100px;margin:0 auto;padding:12px 24px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
-.card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04);display:flex;flex-direction:column;gap:10px;transition:transform .15s;}
-.card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,0.08);}
-.thumb{height:170px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f6f6f6;}
-.thumb img{max-width:100%;max-height:100%;display:block;}
-.title{font-weight:600;font-size:16px;}
-.price{color:#ff7aa2;font-weight:700;}
-.btn{background:#ff7aa2;border:none;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;margin-top:8px;}
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:60;}
-.modal{width:100%;max-width:900px;background:#fff;border-radius:12px;padding:18px;display:flex;gap:18px;align-items:flex-start;}
-.modal .left{flex:1;}
-.modal .right{width:320px;min-width:260px;}
-.close{background:none;border:0;font-size:20px;cursor:pointer;color:#666;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monika — Ürünler</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #333;
+    }
 
-/* İletişim widget stili */
-#contactWidget{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  z-index:100;
-}
+    header {
+      background: pink;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-.contact-btn{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 16px;
-  border-radius:50px;
-  color:#fff;
-  font-weight:600;
-  text-decoration:none;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-  transition:all 0.3s ease;
-  overflow:hidden;
-  white-space:nowrap;
-  width:50px;
-  justify-content:center;
-}
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
 
-.contact-btn img{width:24px;height:24px;flex-shrink:0;}
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      transition: transform 0.2s;
+    }
 
-.contact-btn span{opacity:0;transition:opacity 0.3s ease;}
+    .product-card:hover {
+      transform: scale(1.02);
+    }
 
-.contact-btn.whatsapp{background:#25D366;}
-.contact-btn.email{background:#0072c6;}
+    .product-card img {
+      width: 100%;
+      height: auto;
+    }
 
-.contact-btn:hover{
-  width:150px;
-  justify-content:flex-start;
-}
-.contact-btn:hover span{opacity:1;}
-</style>
+    .product-card h3 {
+      margin: 10px 0 5px;
+      font-size: 16px;
+    }
+
+    .price {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 5px;
+    }
+
+    .btn {
+      margin: 5px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .buy-btn {
+      background: #e91e63;
+      color: white;
+    }
+
+    .preview-btn {
+      background: #555;
+      color: white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 80%;
+      max-width: 900px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    .modal video {
+      width: 50%;
+      background: #000;
+    }
+
+    .modal-info {
+      width: 50%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Responsive: telefonda video üstte */
+    @media (max-width: 768px) {
+      .modal-content {
+        flex-direction: column;
+      }
+      .modal video, .modal-info {
+        width: 100%;
+      }
+    }
+
+    /* Footer (iletişim) */
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #ffb6c1;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="brand"><div class="logo">M</div><h1>Monika</h1></div>
-</header>
+<header>Monika — Ürünler</header>
 
-<main class="container">
-  <h2>Popüler Ürünler</h2>
-  <div class="grid" id="productGrid"></div>
-</main>
+<div class="product-grid">
+  <!-- Ürün 1 -->
+  <div class="product-card">
+    <img src="urun1.png" alt="Ürün 1">
+    <h3>Ürün 1</h3>
+    <div class="price"><span class="old-price">600 TL</span> 600 TL</div>
+    <button class="btn preview-btn" onclick="openModal('urun1.mp4','Ürün 1 Özellikleri','• Özellik 1\n• Özellik 2\n• Özellik 3')">İncele</button>
+    <button class="btn buy-btn" onclick="window.location.href='https://www.paytr.com/link/u23WBZD'">Satın Al</button>
+  </div>
 
-<!-- Modal -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal">
-    <div class="left">
-      <div id="modalMediaWrap" style="height:300px;"></div>
-    </div>
-    <div class="right">
-      <button class="close" id="modalClose">&times;</button>
-      <h3 id="modalTitle">Ürün Adı</h3>
-      <div id="modalDesc" style="color:#666;margin:8px 0;">Açıklama</div>
-      <div style="color:#ff7aa2;font-weight:700;font-size:18px" id="modalPrice">₺0,00</div>
-      <button class="btn" id="modalBuy" style="margin-top:12px;">Satın Al</button>
-    </div>
+  <!-- Ürün 2 -->
+  <div class="product-card">
+    <img src="urun2.png" alt="Ürün 2">
+    <h3>Ürün 2</h3>
+    <div class="price"><span class="old-price">450 TL</span> 450 TL</div>
+    <button class="btn preview-btn" onclick="openModal('urun2.mp4','Ürün 2 Özellikleri','• Özellik 1\n• Özellik 2\n• Özellik 3')">İncele</button>
+    <button class="btn buy-btn" onclick="window.location.href='https://www.paytr.com/link/uIhRkaq'">Satın Al</button>
+  </div>
+
+  <!-- Ürün 3 -->
+  <div class="product-card">
+    <img src="urun3.png" alt="Ürün 3">
+    <h3>Ürün 3</h3>
+    <div class="price"><span class="old-price">600 TL</span> 600 TL</div>
+    <button class="btn preview-btn" onclick="openModal('urun3.mp4','Ürün 3 Özellikleri','• Özellik 1\n• Özellik 2\n• Özellik 3')">İncele</button>
+    <button class="btn buy-btn" onclick="window.location.href='https://www.paytr.com/link/u23WBZD'">Satın Al</button>
+  </div>
+
+  <!-- Ürün 4 -->
+  <div class="product-card">
+    <img src="urun4.png" alt="Ürün 4">
+    <h3>Ürün 4</h3>
+    <div class="price"><span class="old-price">450 TL</span> 450 TL</div>
+    <button class="btn preview-btn" onclick="openModal('urun4.mp4','Ürün 4 Özellikleri','• Özellik 1\n• Özellik 2\n• Özellik 3')">İncele</button>
+    <button class="btn buy-btn" onclick="window.location.href='https://www.paytr.com/link/uIhRkaq'">Satın Al</button>
+  </div>
+
+  <!-- Ürün 5 -->
+  <div class="product-card">
+    <img src="urun5.png" alt="Ürün 5">
+    <h3>Ürün 5</h3>
+    <div class="price"><span class="old-price">600 TL</span> 600 TL</div>
+    <button class="btn preview-btn" onclick="openModal('urun5.mp4','Ürün 5 Özellikleri','• Özellik 1\n• Özellik 2\n• Özellik 3')">İncele</button>
+    <button class="btn buy-btn" onclick="window.location.href='https://www.paytr.com/link/u23WBZD'">Satın Al</button>
   </div>
 </div>
 
-<!-- İletişim Widget -->
-<div id="contactWidget">
-  <a href="https://wa.me/6285134973567" target="_blank" class="contact-btn whatsapp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-    <span>WhatsApp</span>
-  </a>
-  <a href="mailto:monicasatis@example.com" class="contact-btn email">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="E-posta">
-    <span>E-posta</span>
-  </a>
+<!-- Modal -->
+<div class="modal" id="previewModal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+    <video id="previewVideo" controls muted playsinline></video>
+    <div class="modal-info" id="modalFeatures"></div>
+  </div>
 </div>
 
+<footer>
+  <p>Bize Ulaşın:</p>
+  <a href="https://wa.me/6285134973567" target="_blank">WhatsApp</a> | 
+  <a href="mailto:monicasatis@example.com">E-posta</a>
+</footer>
+
 <script>
-const products = [
-  {id:1,name:"Ürün 1",price:450,image:"urun1.png",desc:"Ürün 1 açıklaması",video:"urun1.mp4",buyLink:"https://www.paytr.com/link/uIhRkaq"},
-  {id:2,name:"Ürün 2",price:450,image:"urun2.png",desc:"Ürün 2 açıklaması",video:"urun2.mp4",buyLink:"https://www.paytr.com/link/uIhRkaq"},
-  {id:3,name:"Ürün 3",price:450,image:"urun3.png",desc:"Ürün 3 açıklaması",video:"urun3.mp4",buyLink:"https://www.paytr.com/link/uIhRkaq"},
-  {id:4,name:"Ürün 4",price:600,image:"urun4.png",desc:"Ürün 4 açıklaması",video:"urun4.mp4",buyLink:"https://www.paytr.com/link/u23WBZD"},
-  {id:5,name:"Ürün 5",price:600,image:"urun5.png",desc:"Ürün 5 açıklaması",video:"urun5.mp4",buyLink:"https://www.paytr.com/link/u23WBZD"}
-];
+  function openModal(videoSrc, title, features) {
+    const modal = document.getElementById("previewModal");
+    const video = document.getElementById("previewVideo");
+    const modalInfo = document.getElementById("modalFeatures");
 
-const productGrid = document.getElementById('productGrid');
-const modal = document.getElementById('modal');
-const modalMediaWrap = document.getElementById('modalMediaWrap');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalPrice = document.getElementById('modalPrice');
-const modalClose = document.getElementById('modalClose');
-const modalBuy = document.getElementById('modalBuy');
+    video.src = videoSrc;
+    video.play().catch(err => console.log("Video başlatılamadı:", err));
+    modalInfo.textContent = features;
 
-let currentBuyLink = '';
+    modal.style.display = "flex";
+  }
 
-function renderProducts(){
-  productGrid.innerHTML = products.map(p=>`
-    <div class="card">
-      <div class="thumb"><img src="${p.image}" alt="${p.name}"></div>
-      <div class="title">${p.name}</div>
-      <div class="price">₺${p.price}</div>
-      <button class="btn" onclick="openQuick('${p.name}', ${p.price}, '${p.desc}', '${p.video}', '${p.buyLink}')">İncele</button>
-    </div>
-  `).join('');
-}
-
-function openQuick(name, price, desc, videoSrc, buyLink){
-  modalMediaWrap.innerHTML = '';
-  const video = document.createElement('video');
-  video.src = videoSrc;
-  video.controls = true;
-  video.autoplay = true;
-  video.muted = true;
-  video.loop = true;
-  video.style.width = '100%';
-  video.style.height = '100%';
-  video.style.objectFit = 'cover';
-  modalMediaWrap.appendChild(video);
-
-  modalTitle.textContent = name;
-  modalDesc.textContent = desc;
-  modalPrice.textContent = '₺' + price;
-  modal.style.display = 'flex';
-  currentBuyLink = buyLink;
-}
-
-modalClose.onclick = ()=> modal.style.display = 'none';
-modalBuy.onclick = ()=>{ if(currentBuyLink) window.open(currentBuyLink, "_blank"); }
-document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') modal.style.display='none'; });
-
-renderProducts();
+  function closeModal() {
+    const modal = document.getElementById("previewModal");
+    const video = document.getElementById("previewVideo");
+    video.pause();
+    video.currentTime = 0;
+    modal.style.display = "none";
+  }
 </script>
 
 </body>
